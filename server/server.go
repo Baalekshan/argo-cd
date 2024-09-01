@@ -490,7 +490,7 @@ func (a *ArgoCDServer) Listen() (*Listeners, error) {
 		dOpts = append(dOpts, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	}
 	// nolint:staticcheck
-	conn, err := grpc.Dial(fmt.Sprintf("localhost:%d", a.ListenPort), dOpts...)
+	conn, err := grpc.NewClient(fmt.Sprintf("dns:///localhost:%d", a.ListenPort), dOpts...)
 	if err != nil {
 		io.Close(mainLn)
 		io.Close(metricsLn)
